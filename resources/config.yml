@@ -1,0 +1,15 @@
+# Atlas Interactive Map by Kyle Nanakdewa
+# Configuration
+
+# Thank you for using Atlas! See my other plugins at http://akenland.com/plugins
+
+# Don't change the formatting of this file, or Bukkit will complain. To reset this config to default, just delete it.
+# We recommend using VS Code (https://code.visualstudio.com/) to modify this file, as it will help you with formatting.
+# Do NOT use tabs (tab indent) - use spaces. VS Code will automatically insert spaces, but other text editors won't.
+
+# Full documentation can be found at http://akenland.com/plugins/atlas
+# After editing this file, use "/atlas reload" to load your changes into the server.
+
+
+# The websocket URL (endpoint) for the Atlas server. Default "ws://localhost:8080".
+ws-url: ws://localhost:8080

@@ -1,0 +1,13 @@
+name: Atlas
+version: 1.0
+description: An interactive map in a web app.
+author: Kyle Nanakdewa
+website: http://Akenland.com/plugins
+
+main: com.kylenanakdewa.atlasmap.AtlasPlugin
+
+commands:
+  atlas:
+    description: View plugin information, and reload the plugin.
+    permission: atlas.admin
+    usage: /atlas <version/reload>
