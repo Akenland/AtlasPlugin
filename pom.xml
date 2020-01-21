@@ -58,9 +58,14 @@
       <version>1.1</version>
     </dependency>
     <dependency>
-      <groupId>org.glassfish.tyrus.bundles</groupId>
-      <artifactId>websocket-ri-bundle</artifactId>
+      <groupId>org.glassfish.tyrus</groupId>
+      <artifactId>tyrus-client</artifactId>
       <version>1.15</version>
+    </dependency>
+    <dependency>
+      <groupId>org.glassfish.tyrus</groupId>
+      <artifactId>tyrus-container-grizzly</artifactId>
+      <version>1.2.1</version>
     </dependency>
   </dependencies>
 </project>
