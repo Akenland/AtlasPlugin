@@ -183,10 +183,12 @@ public class AtlasWebSocketClient extends PluginWebSocketClient implements Liste
                     if (material.isBlock() && !material.isAir()) {
                         String materialString = material.getKey().getKey();
                         String world = chunkSnapshot.getWorldName();
+                        int worldX = chunkSnapshot.getX() * 16 + x;
+                        int worldZ = chunkSnapshot.getZ() * 16 + z;
 
                         String jsonString = "{\"type\": \"block_place\", \"material\": \"" + materialString
-                                + "\", \"world\": \"" + world + "\", \"x\": " + x + ", \"y\": " + y + ", \"z\": " + z
-                                + "}";
+                                + "\", \"world\": \"" + world + "\", \"x\": " + worldX + ", \"y\": " + y + ", \"z\": "
+                                + worldZ + "}";
 
                         sendMessage(jsonString);
                     }
