@@ -176,11 +176,16 @@ public class AtlasWebSocketClient extends PluginWebSocketClient implements Liste
                 int y = chunkSnapshot.getHighestBlockYAt(x, z);
 
                 for (; y > 0; y--) {
-                    if (chunkSnapshot.getBlockEmittedLight(x, y, z) != 0
-                            || chunkSnapshot.getBlockSkyLight(x, y, z) != 0) {
+                    Material material = chunkSnapshot.getBlockType(x, y, z);
+                    if (material.isBlock() && !material.isAir()) {
 
-                        Material material = chunkSnapshot.getBlockType(x, y, z);
-                        if (material.isBlock() && !material.isAir()) {
+                        // make sure there is air on at least one face
+                        if (chunkSnapshot.getBlockType(x, Math.max(y + 1, 255), z).isAir()
+                                || chunkSnapshot.getBlockType(Math.min(x - 1, 0), y, z).isAir()
+                                || chunkSnapshot.getBlockType(Math.max(x + 1, 15), y, z).isAir()
+                                || chunkSnapshot.getBlockType(x, y, Math.min(z - 1, 0)).isAir()
+                                || chunkSnapshot.getBlockType(x, y, Math.max(z + 1, 15)).isAir()) {
+
                             String materialString = material.getKey().getKey();
                             String world = chunkSnapshot.getWorldName();
                             int worldX = chunkSnapshot.getX() * 16 + x;
