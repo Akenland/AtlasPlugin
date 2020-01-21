@@ -2,7 +2,8 @@ package com.kylenanakdewa.atlasmap.websocket;
 
 import java.io.IOException;
 import java.net.URI;
-import javax.websocket.DeploymentException;
+
+import com.neovisionaries.ws.client.WebSocketException;
 
 import org.bukkit.plugin.Plugin;
 
@@ -18,12 +19,8 @@ public class PluginWebSocketClient extends WebSocketClient {
      *
      * @param endpoint the websocket server to connect to
      * @param plugin   the plugin that owns this websocket client
-     * @throws DeploymentException if the annotated endpoint instance is not valid
-     * @throws IOException         if there was a network or protocol problem that
-     *                             prevented the client endpoint being connected to
-     *                             its server
      */
-    public PluginWebSocketClient(URI endpoint, Plugin plugin) throws DeploymentException, IOException {
+    public PluginWebSocketClient(URI endpoint, Plugin plugin) throws IOException, WebSocketException {
         super(endpoint, plugin.getLogger());
     }
 

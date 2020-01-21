@@ -4,9 +4,9 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
-import javax.websocket.DeploymentException;
-
 import com.kylenanakdewa.atlasmap.websocket.AtlasWebSocketClient;
+
+import com.neovisionaries.ws.client.WebSocketException;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -51,7 +51,7 @@ public final class AtlasPlugin extends JavaPlugin {
 		// Open websocket connection
 		try {
 			websocketClient = new AtlasWebSocketClient(websocketUri, this);
-		} catch (DeploymentException | IOException e) {
+		} catch (IOException | WebSocketException e) {
 			getLogger().warning("Failed to connect to websocket server: " + e.getLocalizedMessage());
 		}
 
