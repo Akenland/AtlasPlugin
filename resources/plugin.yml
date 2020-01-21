@@ -4,6 +4,7 @@ description: An interactive map in a web app.
 author: Kyle Nanakdewa
 website: http://Akenland.com/plugins
 
+api-version: 1.14
 main: com.kylenanakdewa.atlasmap.AtlasPlugin
 
 commands:
