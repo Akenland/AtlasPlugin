@@ -61,11 +61,13 @@
       <groupId>org.glassfish.tyrus</groupId>
       <artifactId>tyrus-client</artifactId>
       <version>1.15</version>
+      <scope>compile</scope>
     </dependency>
     <dependency>
       <groupId>org.glassfish.tyrus</groupId>
       <artifactId>tyrus-container-grizzly-client</artifactId>
       <version>1.15</version>
+      <scope>compile</scope>
     </dependency>
   </dependencies>
 </project>
