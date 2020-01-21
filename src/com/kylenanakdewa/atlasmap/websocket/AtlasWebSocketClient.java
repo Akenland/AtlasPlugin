@@ -56,7 +56,7 @@ public class AtlasWebSocketClient extends PluginWebSocketClient implements Liste
         String chatString = ChatColor
                 .stripColor(String.format(event.getFormat(), event.getPlayer().getDisplayName(), event.getMessage()));
 
-        String jsonString = "{type: game_chat, message: " + chatString + "}";
+        String jsonString = "{type: \"game_chat\", message: \"" + chatString + "\"}";
 
         sendMessage(jsonString);
     }
@@ -71,7 +71,7 @@ public class AtlasWebSocketClient extends PluginWebSocketClient implements Liste
 
         String joinString = ChatColor.stripColor(event.getJoinMessage());
 
-        String jsonString = "{type: game_chat, message: " + joinString + "}";
+        String jsonString = "{type: \"game_chat\", message: \"" + joinString + "\"}";
 
         sendMessage(jsonString);
     }
@@ -86,7 +86,7 @@ public class AtlasWebSocketClient extends PluginWebSocketClient implements Liste
 
         String quitString = ChatColor.stripColor(event.getQuitMessage());
 
-        String jsonString = "{type: game_chat, message: " + quitString + "}";
+        String jsonString = "{type: \"game_chat\", message: \"" + quitString + "\"}";
 
         sendMessage(jsonString);
     }
@@ -104,9 +104,8 @@ public class AtlasWebSocketClient extends PluginWebSocketClient implements Liste
                 || event.getFrom().distanceSquared(event.getTo()) < 1)
             return;
 
-
         // If player moved into new chunk, send blocks
-        if(!event.getFrom().getChunk().equals(event.getTo().getChunk())){
+        if (!event.getFrom().getChunk().equals(event.getTo().getChunk())) {
             sendChunkBlocks(event.getTo().getChunk());
         }
     }
@@ -149,8 +148,8 @@ public class AtlasWebSocketClient extends PluginWebSocketClient implements Liste
         int y = block.getLocation().getBlockY();
         int z = block.getLocation().getBlockZ();
 
-        String jsonString = "{type: " + typeString + ", material: " + material + ", world: " + world + ", x: " + x
-                + ", y: " + y + ", z: " + z + "}";
+        String jsonString = "{type: \"" + typeString + "\", material: \"" + material + "\", world: \"" + world
+                + "\", x: " + x + ", y: " + y + ", z: " + z + "}";
 
         sendMessage(jsonString);
     }
@@ -180,8 +179,8 @@ public class AtlasWebSocketClient extends PluginWebSocketClient implements Liste
                         String materialString = material.getKey().getKey();
                         String world = chunkSnapshot.getWorldName();
 
-                        String jsonString = "{type: block_place, material: " + materialString + ", world: " + world
-                                + ", x: " + x + ", y: " + y + ", z: " + z + "}";
+                        String jsonString = "{type: \"block_place\", material: \"" + materialString + "\", world: \""
+                                + world + "\", x: " + x + ", y: " + y + ", z: " + z + "}";
 
                         sendMessage(jsonString);
                     }
