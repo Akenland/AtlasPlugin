@@ -175,22 +175,23 @@ public class AtlasWebSocketClient extends PluginWebSocketClient implements Liste
             for (int z = 0; z < 16; z++) {
                 int y = chunkSnapshot.getHighestBlockYAt(x, z);
 
-                for (; y > 0 /*
-                              * && chunkSnapshot.getBlockEmittedLight(x, y, z) +
-                              * chunkSnapshot.getBlockSkyLight(x, y, z) > 0
-                              */; y--) {
-                    Material material = chunkSnapshot.getBlockType(x, y, z);
-                    if (material.isBlock() && !material.isAir()) {
-                        String materialString = material.getKey().getKey();
-                        String world = chunkSnapshot.getWorldName();
-                        int worldX = chunkSnapshot.getX() * 16 + x;
-                        int worldZ = chunkSnapshot.getZ() * 16 + z;
+                for (; y > 0; y--) {
+                    if (chunkSnapshot.getBlockEmittedLight(x, y, z) != 0
+                            || chunkSnapshot.getBlockSkyLight(x, y, z) != 0) {
 
-                        String jsonString = "{\"type\": \"block_place\", \"material\": \"" + materialString
-                                + "\", \"world\": \"" + world + "\", \"x\": " + worldX + ", \"y\": " + y + ", \"z\": "
-                                + worldZ + "}";
+                        Material material = chunkSnapshot.getBlockType(x, y, z);
+                        if (material.isBlock() && !material.isAir()) {
+                            String materialString = material.getKey().getKey();
+                            String world = chunkSnapshot.getWorldName();
+                            int worldX = chunkSnapshot.getX() * 16 + x;
+                            int worldZ = chunkSnapshot.getZ() * 16 + z;
 
-                        sendMessage(jsonString);
+                            String jsonString = "{\"type\": \"block_place\", \"material\": \"" + materialString
+                                    + "\", \"world\": \"" + world + "\", \"x\": " + worldX + ", \"y\": " + y
+                                    + ", \"z\": " + worldZ + "}";
+
+                            sendMessage(jsonString);
+                        }
                     }
                 }
             }
