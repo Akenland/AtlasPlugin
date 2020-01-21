@@ -164,7 +164,7 @@ public class AtlasWebSocketClient extends PluginWebSocketClient implements Liste
      * Sends an entire chunk of block changes.
      */
     public void sendChunkBlocks(Chunk chunk) {
-        if (chunk.isLoaded() || chunk.getInhabitedTime() < 200)
+        if (chunk.isLoaded() /* || chunk.getInhabitedTime() < 200 */)
             return;
 
         Bukkit.broadcast("Sent chunk " + chunk.getX() + " " + chunk.getZ(), "core.admin");

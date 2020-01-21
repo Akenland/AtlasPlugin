@@ -6,6 +6,7 @@ import java.util.List;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
+import org.bukkit.entity.Player;
 
 /**
  * Commands for the Atlas plugin.
@@ -34,6 +35,14 @@ public class AtlasCommands implements TabExecutor {
         if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
             plugin.reload();
             sender.sendMessage("Atlas reloaded.");
+            return true;
+        }
+
+        // Chunk send command
+        if (args.length == 1 && args[0].equalsIgnoreCase("chunk") && sender instanceof Player) {
+            Player player = (Player) sender;
+            plugin.getWsClient().sendChunkBlocks(player.getLocation().getChunk());
+            sender.sendMessage("Chunk update sent.");
             return true;
         }
 

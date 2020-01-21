@@ -71,4 +71,11 @@ public final class AtlasPlugin extends JavaPlugin {
 
 	}
 
+	/**
+	 * Gets the websocket client.
+	 */
+	public AtlasWebSocketClient getWsClient() {
+		return websocketClient;
+	}
+
 }
