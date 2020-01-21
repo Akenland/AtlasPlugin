@@ -59,13 +59,8 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-      <groupId>org.glassfish.tyrus</groupId>
-      <artifactId>tyrus-client</artifactId>
-      <version>1.15</version>
-    </dependency>
-    <dependency>
-      <groupId>org.glassfish.tyrus</groupId>
-      <artifactId>tyrus-container-grizzly-client</artifactId>
+      <groupId>org.glassfish.tyrus.bundles</groupId>
+      <artifactId>tyrus-standalone-client</artifactId>
       <version>1.15</version>
     </dependency>
   </dependencies>
