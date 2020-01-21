@@ -6,6 +6,7 @@ import java.net.URI;
 import com.kylenanakdewa.atlasmap.AtlasPlugin;
 import com.neovisionaries.ws.client.WebSocketException;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.ChunkSnapshot;
@@ -101,7 +102,7 @@ public class AtlasWebSocketClient extends PluginWebSocketClient implements Liste
 
         // Sneaking, invisibility check, minimum movement threshold
         if (event.getPlayer().isSneaking() || event.getPlayer().hasPotionEffect(PotionEffectType.INVISIBILITY)
-                || event.getFrom().distanceSquared(event.getTo()) < 1)
+                || event.getFrom().distanceSquared(event.getTo()) <= 0.02)
             return;
 
         // If player moved into new chunk, send blocks
@@ -165,6 +166,8 @@ public class AtlasWebSocketClient extends PluginWebSocketClient implements Liste
     public void sendChunkBlocks(Chunk chunk) {
         if (chunk.isLoaded() || chunk.getInhabitedTime() < 200)
             return;
+
+        Bukkit.broadcast("Sent chunk " + chunk.getX() + " " + chunk.getZ(), "core.admin");
 
         ChunkSnapshot chunkSnapshot = chunk.getChunkSnapshot();
 
