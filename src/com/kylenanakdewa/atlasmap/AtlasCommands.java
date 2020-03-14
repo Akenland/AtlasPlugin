@@ -13,11 +13,11 @@ import org.bukkit.entity.Player;
  *
  * @author Kyle Nanakdewa
  */
-public class AtlasCommands implements TabExecutor {
+final class AtlasCommands implements TabExecutor {
 
     private final AtlasPlugin plugin;
 
-    public AtlasCommands(AtlasPlugin plugin) {
+    AtlasCommands(AtlasPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -27,7 +27,7 @@ public class AtlasCommands implements TabExecutor {
         if (args.length == 0 || args[0].equalsIgnoreCase("version")) {
             sender.sendMessage("Atlas " + plugin.getDescription().getVersion() + " by Kyle Nanakdewa");
             sender.sendMessage("- Interactive Map");
-            sender.sendMessage("- Website: http://Akenland.com/plugins");
+            sender.sendMessage("- Website: https://plugins.akenland.com");
             return true;
         }
 
@@ -39,7 +39,7 @@ public class AtlasCommands implements TabExecutor {
         }
 
         // Chunk send command
-        if (args.length == 1 && args[0].equalsIgnoreCase("chunk") && sender instanceof Player) {
+        if (args.length == 1 && args[0].equalsIgnoreCase("sendchunk") && sender instanceof Player) {
             Player player = (Player) sender;
             plugin.getWsClient().sendChunkBlocks(player.getLocation().getChunk());
             sender.sendMessage("Chunk update sent.");
@@ -54,9 +54,10 @@ public class AtlasCommands implements TabExecutor {
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
         // Main command - return each sub-command
-        if (args.length <= 1)
-            return Arrays.asList("version", "reload");
+        if (args.length == 1)
+            return Arrays.asList("version", "reload", "sendchunk");
         // Otherwise return nothing
         return Arrays.asList("");
     }
+
 }

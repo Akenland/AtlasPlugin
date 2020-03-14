@@ -7,20 +7,13 @@ import com.kylenanakdewa.atlasmap.AtlasPlugin;
 import com.neovisionaries.ws.client.WebSocketException;
 
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.ChunkSnapshot;
 import org.bukkit.Material;
-import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.potion.PotionEffectType;
 
 /**
@@ -47,52 +40,6 @@ public class AtlasWebSocketClient extends PluginWebSocketClient implements Liste
     }
 
     /**
-     * Sends a chat message.
-     */
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onChat(AsyncPlayerChatEvent event) {
-        if (event.getPlayer().hasPermission("atlas.invisible"))
-            return;
-
-        String chatString = ChatColor
-                .stripColor(String.format(event.getFormat(), event.getPlayer().getDisplayName(), event.getMessage()));
-
-        String jsonString = "{\"type\": \"game_chat\", \"message\": \"" + chatString + "\"}";
-
-        sendMessage(jsonString);
-    }
-
-    /**
-     * Sends a player join.
-     */
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onJoin(PlayerJoinEvent event) {
-        if (event.getPlayer().hasPermission("atlas.invisible"))
-            return;
-
-        String joinString = ChatColor.stripColor(event.getJoinMessage());
-
-        String jsonString = "{\"type\": \"game_chat\", \"message\": \"" + joinString + "\"}";
-
-        sendMessage(jsonString);
-    }
-
-    /**
-     * Sends a player quit.
-     */
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onQuit(PlayerQuitEvent event) {
-        if (event.getPlayer().hasPermission("atlas.invisible"))
-            return;
-
-        String quitString = ChatColor.stripColor(event.getQuitMessage());
-
-        String jsonString = "{\"type\": \"game_chat\", \"message\": \"" + quitString + "\"}";
-
-        sendMessage(jsonString);
-    }
-
-    /**
      * Sends player movement.
      */
     @EventHandler(priority = EventPriority.MONITOR)
@@ -109,55 +56,6 @@ public class AtlasWebSocketClient extends PluginWebSocketClient implements Liste
         if (!event.getFrom().getChunk().equals(event.getTo().getChunk())) {
             sendChunkBlocks(event.getTo().getChunk());
         }
-    }
-
-    /**
-     * Sends block place.
-     */
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onBlockPlace(BlockPlaceEvent event) {
-        if (event.isCancelled() || !event.canBuild())
-            return;
-
-        sendBlockChange(event.getBlock(), BlockChangeType.PLACE);
-    }
-
-    /**
-     * Sends block break.
-     */
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onBlockBreak(BlockBreakEvent event) {
-        if (event.isCancelled())
-            return;
-
-        sendBlockChange(event.getBlock(), BlockChangeType.BREAK);
-    }
-
-    /**
-     * Sends a block change.
-     */
-    public void sendBlockChange(Block block, BlockChangeType type) {
-        // Check that block is visible to skylight
-        if (block.getLightLevel() == 0 /* block.getLightFromSky() < 4 */)
-            return;
-
-        String typeString = "block_" + type.name().toLowerCase();
-
-        String material = block.getType().getKey().getKey();
-        String world = block.getLocation().getWorld().getName();
-        int x = block.getLocation().getBlockX();
-        int y = block.getLocation().getBlockY();
-        int z = block.getLocation().getBlockZ();
-
-        String jsonString = "{\"type\": \"" + typeString + "\", \"material\": \"" + material + "\", \"world\": \""
-                + world + "\", \"x\": " + x + ", \"y\": " + y + ", \"z\": " + z + "}";
-
-        sendMessage(jsonString);
-    }
-
-    /** Whether a block was placed or broken. */
-    private enum BlockChangeType {
-        PLACE, BREAK;
     }
 
     /**
