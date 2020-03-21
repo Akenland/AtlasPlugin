@@ -10,18 +10,13 @@ import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.ChunkSnapshot;
 import org.bukkit.Material;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerMoveEvent;
-import org.bukkit.potion.PotionEffectType;
 
 /**
  * Websocket client for the Atlas map.
  *
  * @author Kyle Nanakdewa
  */
-public class AtlasWebSocketClient extends PluginWebSocketClient implements Listener {
+public class AtlasWebSocketClient extends PluginWebSocketClient {
 
     /**
      * Creates a new websocket client, and opens the connection to the server.
@@ -36,27 +31,8 @@ public class AtlasWebSocketClient extends PluginWebSocketClient implements Liste
     @Override
     public void onMessage(String message) {
         super.onMessage(message);
-
     }
 
-    /**
-     * Sends player movement.
-     */
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void onMove(PlayerMoveEvent event) {
-        if (event.isCancelled() || event.getPlayer().hasPermission("atlas.invisible"))
-            return;
-
-        // Sneaking, invisibility check, minimum movement threshold
-        if (event.getPlayer().isSneaking() || event.getPlayer().hasPotionEffect(PotionEffectType.INVISIBILITY)
-                || event.getFrom().distanceSquared(event.getTo()) <= 0.02)
-            return;
-
-        // If player moved into new chunk, send blocks
-        if (!event.getFrom().getChunk().equals(event.getTo().getChunk())) {
-            sendChunkBlocks(event.getTo().getChunk());
-        }
-    }
 
     /**
      * Sends an entire chunk of block changes.

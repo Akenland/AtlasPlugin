@@ -3,6 +3,8 @@ package com.kylenanakdewa.atlasmap;
 import java.util.Arrays;
 import java.util.List;
 
+import com.kylenanakdewa.atlasmap.serializers.world.worlddata.ChunkData;
+
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
@@ -41,7 +43,7 @@ final class AtlasCommands implements TabExecutor {
         // Chunk send command
         if (args.length == 1 && args[0].equalsIgnoreCase("sendchunk") && sender instanceof Player) {
             Player player = (Player) sender;
-            plugin.getWsClient().sendChunkBlocks(player.getLocation().getChunk());
+            plugin.getWsClient().sendMessage(new ChunkData(player.getLocation().getChunk()).toJson());
             sender.sendMessage("Chunk update sent.");
             return true;
         }

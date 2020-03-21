@@ -31,7 +31,7 @@ public class ServerEventListener extends AtlasListener {
         if (event.getPlayer().hasPermission("atlas.invisible"))
             return;
 
-        sendEventData(new GameChatEventData(event));
+        sendData(new GameChatEventData(event));
     }
 
     /**
@@ -42,7 +42,7 @@ public class ServerEventListener extends AtlasListener {
         if (event.getPlayer().hasPermission("atlas.invisible"))
             return;
 
-        sendEventData(new JoinGameEventData(event));
+        sendData(new JoinGameEventData(event));
     }
 
     /**
@@ -53,7 +53,7 @@ public class ServerEventListener extends AtlasListener {
         if (event.getPlayer().hasPermission("atlas.invisible"))
             return;
 
-        sendEventData(new QuitGameEventData(event));
+        sendData(new QuitGameEventData(event));
     }
 
 }

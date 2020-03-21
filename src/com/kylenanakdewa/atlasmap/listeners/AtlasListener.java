@@ -1,6 +1,6 @@
 package com.kylenanakdewa.atlasmap.listeners;
 
-import com.kylenanakdewa.atlasmap.serializers.EventData;
+import com.kylenanakdewa.atlasmap.serializers.Data;
 import com.kylenanakdewa.atlasmap.websocket.AtlasWebSocketClient;
 
 import org.bukkit.event.Listener;
@@ -22,8 +22,8 @@ public abstract class AtlasListener implements Listener {
     /**
      * Sends event data to the Atlas server.
      */
-    protected void sendEventData(EventData eventData) {
-        wsClient.sendMessage(eventData.toJson());
+    protected void sendData(Data data) {
+        wsClient.sendMessage(data.toJson());
     }
 
 }

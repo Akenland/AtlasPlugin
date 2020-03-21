@@ -4,12 +4,14 @@ import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 
+import com.kylenanakdewa.atlasmap.listeners.PlayerMovementListener;
 import com.kylenanakdewa.atlasmap.listeners.ServerEventListener;
 import com.kylenanakdewa.atlasmap.listeners.WorldListener;
 import com.kylenanakdewa.atlasmap.websocket.AtlasWebSocketClient;
 
 import com.neovisionaries.ws.client.WebSocketException;
 
+import org.bukkit.event.HandlerList;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -37,8 +39,12 @@ public final class AtlasPlugin extends JavaPlugin {
 	@Override
 	public void onDisable() {
 		// Close the websocket connection
-		if (wsClient != null)
+		if (wsClient != null) {
 			wsClient.close();
+		}
+
+		// Unregister all listeners
+		HandlerList.unregisterAll(this);
 	}
 
 	/** Reloads the plugin. */
@@ -57,9 +63,12 @@ public final class AtlasPlugin extends JavaPlugin {
 			getLogger().warning("Failed to connect to websocket server: " + e.getLocalizedMessage());
 		}
 
-		// Register event listeners
-		getServer().getPluginManager().registerEvents(new ServerEventListener(wsClient), this);
-		getServer().getPluginManager().registerEvents(new WorldListener(wsClient), this);
+		if (wsClient != null) {
+			// Register event listeners
+			getServer().getPluginManager().registerEvents(new ServerEventListener(wsClient), this);
+			getServer().getPluginManager().registerEvents(new WorldListener(wsClient), this);
+			getServer().getPluginManager().registerEvents(new PlayerMovementListener(wsClient), this);
+		}
 	}
 
 	/** Retrieve values from config. */

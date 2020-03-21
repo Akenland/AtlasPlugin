@@ -35,7 +35,11 @@ public class WebSocketClient {
     public WebSocketClient(URI endpoint, Logger logger) throws IOException, WebSocketException {
         this.logger = logger;
 
-        websocket = new WebSocketFactory().createSocket(endpoint);
+        WebSocketFactory factory = new WebSocketFactory();
+        //factory.setVerifyHostname(false);
+        //factory.setServerName("map.akenland.com");
+
+        websocket = factory.createSocket(endpoint);
         websocket.addListener(listener);
         websocket.connect();
     }

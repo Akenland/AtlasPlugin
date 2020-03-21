@@ -29,7 +29,7 @@ public class WorldListener extends AtlasListener {
         if (event.isCancelled() || !event.canBuild())
             return;
 
-        sendEventData(new BlockPlaceEventData(event));
+        sendData(new BlockPlaceEventData(event));
     }
 
     /**
@@ -40,7 +40,7 @@ public class WorldListener extends AtlasListener {
         if (event.isCancelled())
             return;
 
-        sendEventData(new BlockBreakEventData(event));
+        sendData(new BlockBreakEventData(event));
     }
 
 }
